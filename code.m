@@ -46,9 +46,27 @@ centroid = ceil([height, width]./2); %get the center if the image . Here height 
 [hh,ww] = meshgrid(1:height,1:width) ; % indices of all pixels
 [theta, r] = cart2pol(hh-centroid(1), ww-centroid(1)) ; % convert to polar coordinates relative to the image centre
 % to which sector does each pixel belong
-E = 0:4:360 ;
+
+E = 0:180:360;  %change it to 90:180:360 .... 180:270:360....270:360:360 and see.
+
+
 [~, SectorIdx] = histcounts(theta * (180/pi), E) ;
+
+%[N,edges] = histcounts(X) partitions the X values into bins, and returns the count in each bin, as well as the bin edges. The histcounts function uses an automatic binning algorithm that returns bins with a uniform width, chosen to cover the range of elements in X and reveal the underlying shape of the distribution.
+
 N = arrayfun(@(k) nnz(binary_image(SectorIdx==k)==0), 1:max(SectorIdx)) ; % count for each sector the number of black (0) pixels
+disp(N);
+count_of_0s=0;
+for i=1:size(N,1)
+    for j=1:size(N,2)
+        if(N(i,j)==0)
+            count_of_0s=count_of_0s+1;
+        end
+    end
+end
+
+disp(count_of_0s);
+
 
 
 
