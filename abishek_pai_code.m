@@ -34,34 +34,34 @@ ctr4 = sum(lowerright(:) == 0);
 % disp(ctr1-ctr2);
                            
 %if(ctr1 <= ctr2+5000 or ctr1 <= ctr2-5000 or ctr1 >= ctr2+5000 or ctr1 >= ctr2-5000)
-if(ctr1-ctr2 <=8500 || ctr2-ctr1 <= 8500)
+if(abs(ctr1-ctr2) <=8500)
     disp("Source is at south direction");
-elseif (ctr1 -ctr2 >8500)
+elseif (abs(ctr1 -ctr2) >8500)
     disp("Source is at south-east direction");
-elseif (ctr2 -ctr1 >8500)
+elseif (abs(ctr2 -ctr1) >8500)
     disp("Source is at south-west direction");
 
-elseif(ctr2-ctr3 <=8500 || ctr3-ctr2 <= 8500)
+elseif(abs(ctr2-ctr3) <=8500)
     disp("Source is at west direction");
-elseif (ctr3 -ctr2 >8500)
+elseif (abs(ctr3 -ctr2) >8500)
     disp("Source is at north-east direction");
-elseif (ctr2 -ctr3 >8500)
+elseif (abs(ctr2 -ctr3) >8500)
     disp("Source is at south-east direction");
 
-elseif(ctr3-ctr4 <=8500 || ctr4-ctr3 <= 8500)
+elseif(abs(ctr3-ctr4) <=8500)
     disp("Source is at north direction");
-elseif (ctr3 -ctr4 >8500)
+elseif (abs(ctr3 -ctr4) >8500)
     disp("Source is at north-east direction");
-elseif (ctr4 -ctr3 >8500)
+elseif (abs(ctr4 -ctr3) >8500)
     disp("Source is at north-west direction");
     
-elseif(ctr1-ctr4 <=8500 || ctr4-ctr1 <= 8500)
+elseif(abs(ctr1-ctr4) <=8500)
     disp("Source is at east direction");
-elseif (ctr1 -ctr4 >8500)
+elseif (abs(ctr1 -ctr4) >8500)
     disp("Source is at south-east direction");
-elseif (ctr4 -ctr1 >8500)
+elseif (abs(ctr4 -ctr1) >8500)
     disp("Source is at north-east direction");
     
-elseif(ctr1-ctr2<=600||ctr2-ctr1<=600||ctr2-ctr3<=600||ctr3-ctr2<=600||ctr3-ctr4<=600||ctr4-ctr3<=600||ctr1-ctr4<=600||ctr4-ctr1<=600)
+elseif(abs(ctr1-ctr2)<=600||abs(ctr2-ctr3)<=600||abs(ctr3-ctr4)<=600||abs(ctr1-ctr4)<=600)
     disp("Source is at top");
 end
