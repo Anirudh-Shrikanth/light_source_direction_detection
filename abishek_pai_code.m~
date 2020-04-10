@@ -178,9 +178,6 @@ end
 result = blackFraction.*angles;
 result = sum(result);
 
-% If the answer is close to 180, it means that the weights are equal and
-% the light isn't coming from any direction in particular, or it is from
-% the right.
 disp("The shadow is at ");
 disp(result);
 disp(" degrees");
