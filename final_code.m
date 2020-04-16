@@ -7,16 +7,6 @@
 % Requires the Image Processing Toolbox (IPT) because it demonstates some functions
 % supplied by that toolbox
 
-% TODO 12:35 AM
-% Comments to explain code so far Done 1:51 AM
-% Putting together code Done 12:48 AM
-% Plotting the calculated centroid DONE 1:15 AM
-% Weighted average for the number of pixels in each quadrant Done 1:09 AM
-% Comments to explain weighted average Done 2:13 AM
-% Opening an image with GUI Done 1:23 AM
-% Testing Done 1:29 AM (It works for all images)
-% Time pass Done 1:45
-% Area ScalingDone 2:09 AM
 
 
 % Clears all the variables present in the workspace before running
@@ -36,22 +26,29 @@ image=imread(imgName);
 % This threshold is implicitly done by imbinarize, and is sufficient for
 % our requirements here
 gray_image=rgb2gray(image);
+
 % Conversion of grayscale to binary with the built in threshold
 binary_image=imbinarize(gray_image);
+
 % Obtaining dimensions of the object for object occupation percentage
 % within the image
 [rows, cols, channels] = size(binary_image);
 area = rows * cols;
+
 % Applying a threshold for what constitutes an object in the gray image
 regPropInput = gray_image > 90 & gray_image < 165;
+
 % Acquring the properties of the object which has been detected
 stat = regionprops(regPropInput,'centroid','area');
+
 % Filtering out the boundaries emperically which do not pose sufficient
 % importance
 % Minimum fraction of the image that must be occupied by the object
-areaMaxThreshold = 0.04
+areaMaxThreshold = 0.04;
+
 % Minimum size of the image required in terms of image area
-objectErrorThreshold = 0.0675
+objectErrorThreshold = 0.0675;
+
 % Applying threshold to remove unwanted closed figures and their centroids.
 statNew = stat(abs([stat.Area] - objectErrorThreshold * area) < areaMaxThreshold * area);
 
@@ -84,7 +81,7 @@ row3 = row2 + 1;
 % portion of the image
 upperleft = imcrop(binary_image, [col1 row1 col2 row2]);
 upperright = imcrop(binary_image, [col3 row1 cols - col2 row2]);
-lowerleft = imcrop(binary_image, [col1 row3 col2 row2]);
+lowerleft = imcrop(binary_image, [col1 row3 col2 rows]);
 lowerright = imcrop(binary_image, [col3 row3 cols - col2 rows - row2]);
 
 % Plotting the 4 portions of the image for a visual estimate
@@ -96,7 +93,8 @@ subplot(2,3,4);
 imshow(lowerleft);
 subplot(2,3,5);
 imshow(lowerright);
-subplot(2, 3, 3);% disp(ctr1-ctr2);
+subplot(2, 3, 3);
+
 % The original black and white image with only the shadow and the object
 % Further, the loop overlays all the centroids as calculated by regionprops
 % This will be seen in the image on the right
@@ -117,44 +115,45 @@ ctr4 = sum(lowerright(:) == 0);
 
                            
 %if(ctr1 <= ctr2+5000 or ctr1 <= ctr2-5000 or ctr1 >= ctr2+5000 or ctr1 >= ctr2-5000)
-disp("Estimate #1 for the direction of the source of light ");
-if(abs(ctr1-ctr2) <=8500)
-    disp("Source is at south direct ion");
-elseif (abs(ctr1 -ctr2) >8500)
-    disp("Source is at south-east direction");
-elseif (abs(ctr2 -ctr1) >8500)
-    disp("Source is at south-west direction");
-
-elseif(abs(ctr2-ctr3) <=8500)
-    disp("Source is at west direction");
-elseif (abs(ctr3 -ctr2) >8500)
-    disp("Source is at north-east direction");
-elseif (abs(ctr2 -ctr3) >8500)
-    disp("Source is at south-east direction");
-
-elseif(abs(ctr3-ctr4) <=8500)
-    disp("Source is at north direction");
-elseif (abs(ctr3 -ctr4) >8500)
-    disp("Source is at north-east direction");
-elseif (abs(ctr4 -ctr3) >8500)
-    disp("Source is at north-west direction");
-    
-elseif(abs(ctr1-ctr4) <=8500)
-    disp("Source is at east direction");
-elseif (abs(ctr1 -ctr4) >8500)
-    disp("Source is at south-east direction");
-elseif (abs(ctr4 -ctr1) >8500)
-    disp("Source is at north-east direction");
-    
-elseif(abs(ctr1-ctr2)<=600||abs(ctr2-ctr3)<=600||abs(ctr3-ctr4)<=600||abs(ctr1-ctr4)<=600)
-    disp("Source is at top");
-end
-
+% disp("Estimate #1 for the direction of the source of light ");
+% if(abs(ctr1-ctr2) <=8500 & abs(ctr3+ctr4) < 1000)
+%     disp("Source is at south direction");
+% elseif (abs(ctr1 -ctr2) >8500)
+%     disp("Source is at south-east direction");
+% elseif (abs(ctr2 -ctr1) >8500)
+%     disp("Source is at south-west direction");
+% 
+% elseif(abs(ctr2-ctr3) <=8500 & abs(ctr1+ctr4) < 1000)
+%     disp("Source is at west direction");
+% elseif (abs(ctr3 -ctr2) >8500)
+%     disp("Source is at north-east direction");
+% elseif (abs(ctr2 -ctr3) >8500)
+%     disp("Source is at south-east direction");
+% 
+% elseif(abs(ctr3-ctr4) <=8500 & abs(ctr1+ctr2) < 1000)
+%     disp("Source is at north direction");
+% elseif (abs(ctr3 -ctr4) >8500)
+%     disp("Source is at north-east direction");
+% elseif (abs(ctr4 -ctr3) >8500)
+%     disp("Source is at north-west direction");
+%     
+% elseif(abs(ctr1-ctr4) <=8500 & abs(ctr2+ctr3) < 1000)
+%     disp("Source is at east direction");
+% elseif (abs(ctr1 -ctr4) >8500)
+%     disp("Source is at south-east direction");
+% elseif (abs(ctr4 -ctr1) >8500)
+%     disp("Source is at north-east direction");
+%     
+% elseif(abs(ctr1-ctr2)<=6000||abs(ctr2-ctr3)<=6000||abs(ctr3-ctr4)<=6000||abs(ctr1-ctr4)<=6000)
+%     disp("Source is at top");
+% end
 
 disp(" ");
-% Estimate 2 for the angle using weights
+
+% Estimate 1 for the angle using weights
 % This estimate will work only if there is only a single light source.
 noOfParts = 4;
+
 % The center angle for each part is calculated here
 angles = [0:noOfParts-1];
 anglePerPart = 360/noOfParts;
@@ -170,7 +169,7 @@ angles = angles * anglePerPart + anglePerPart/2;
 % portion
 blackCount = [ctr2, ctr1, ctr3, ctr4];
 blackPixelSum = sum(blackCount);
-disp("Estimate #2");
+disp("Estimate #1");
 blackFraction = zeros(1, noOfParts);
 for portionNo = 1:noOfParts
     blackFraction(portionNo) = blackCount(portionNo)/blackPixelSum;
@@ -180,22 +179,43 @@ result = sum(result);
 
 % If the answer is close to 180, it means that the weights are equal and
 % the light isn't coming from any direction in particular, or it is from
-% the right.
-disp("The shadow is at ");
-disp(result);
-disp(" degrees");
-disp(" ");
+% the right                                                                                                                                                                     
+fprintf("The shadow is at %f",result)
+fprintf("\n");
+fprintf("\n");
 
 % The lightsource is directly to the opposite of the shadow
 lightSource = mod((180 + result),360);
-disp("Therefore, the light is at ");
-disp(lightSource);
-disp(" degrees");
+fprintf("Therefore , the light is at %f %s",lightSource,"degrees");
+fprintf("\n");
 
-
-minBlack = 1000
+minBlack = 1000;
 if (abs(result - 180) < 15)
-    if(ctr2 > minBlack & ctr4 > minBlack)
+    if(ctr2 > minBlack && ctr4 > minBlack)
         disp("Light might be coming from the top");
+        x=1;
     end
+end
+
+disp(" ");
+disp("Estimate #2 for the direction of the source of light");
+disp(" ");
+if(lightSource>0 && lightSource<90)
+    disp("The light source is at north-east direction");
+elseif(lightSource>90 && lightSource<180)
+    disp("The light source is at north-west direction");
+elseif(lightSource>180 && lightSource<270)
+    disp("The light source is at south-west direction");
+elseif(lightSource>270 && lightSource<360 && x~=1)
+    disp("The light source is at south-east direction");
+elseif(lightSource==0)
+    disp("Light source is at east direction");
+elseif(lightSource==90)
+    disp("Light source is at north direction");
+elseif(lightSource==180)
+    disp("Light source is at west direction");
+elseif(lightSource==270)
+    disp("Light source is at south direction");
+else
+    disp("Light source is at the top");
 end
