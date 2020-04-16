@@ -187,7 +187,7 @@ disp(" degrees");
 disp(" ");
 
 % The lightsource is directly to the opposite of the shadow
-lightSource = 360 - result;
+lightSource = mod((180 + result),360);
 disp("Therefore, the light is at ");
 disp(lightSource);
 disp(" degrees");
