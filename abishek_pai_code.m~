@@ -192,10 +192,5 @@ disp("Therefore, the light is at ");
 disp(lightSource);
 disp(" degrees");
 
-
-minBlack = 1000
 if (abs(result - 180) < 15)
-    if(ctr2 > minBlack & ctr4 > minBlack)
-        disp("Light might be coming from the top");
-    end
-end
+    if(c
