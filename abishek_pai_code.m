@@ -119,7 +119,7 @@ ctr4 = sum(lowerright(:) == 0);
 %if(ctr1 <= ctr2+5000 or ctr1 <= ctr2-5000 or ctr1 >= ctr2+5000 or ctr1 >= ctr2-5000)
 disp("Estimate #1 for the direction of the source of light ");
 if(abs(ctr1-ctr2) <=8500)
-    disp("Source is at south direction");
+    disp("Source is at south direct ion");
 elseif (abs(ctr1 -ctr2) >8500)
     disp("Source is at south-east direction");
 elseif (abs(ctr2 -ctr1) >8500)
